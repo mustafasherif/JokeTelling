@@ -22,6 +22,7 @@ public class GCETask extends AsyncTask<Context, Void, String> {
     public GCETask(ProgressBar spinner){
         this.spinner=spinner;
     }
+
 private static MyApi myApiService = null;
 private Context context;
 
@@ -29,7 +30,10 @@ private Context context;
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        spinner.setVisibility(View.VISIBLE);
+        if(spinner!=null){
+            spinner.setVisibility(View.VISIBLE);
+
+        }
     }
 
     @Override
@@ -65,9 +69,13 @@ public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientReques
 @Override
 protected void onPostExecute(String result) {
 
+    if(spinner!=null){
         spinner.setVisibility(View.GONE);
+    }
+
         Intent intent=new Intent(context,JokesActivity.class);
         intent.putExtra("joke",result);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
         }
         }
