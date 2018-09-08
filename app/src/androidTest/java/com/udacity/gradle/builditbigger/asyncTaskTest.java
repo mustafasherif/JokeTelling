@@ -4,15 +4,21 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import javax.security.auth.callback.Callback;
+
+import static android.support.test.InstrumentationRegistry.getContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -34,12 +40,16 @@ public class asyncTaskTest {
     }
 
 
+
+
+
+
     @Test
     public void testJokeTextViewNotEmpty(){
         GCETask gceTask=new GCETask(null);
         gceTask.execute(InstrumentationRegistry.getTargetContext());
         try {
-            String joke=gceTask.get(5,TimeUnit.SECONDS);
+            String joke=gceTask.get(30,TimeUnit.SECONDS);
             Assert.assertTrue(!joke.equals(""));
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -52,8 +62,9 @@ public class asyncTaskTest {
 
     }
 
-
-
-
-
 }
+
+
+
+
+

@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
-
 import com.example.jokes.JokesActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -25,6 +23,8 @@ public class GCETask extends AsyncTask<Context, Void, String> {
 
 private static MyApi myApiService = null;
 private Context context;
+
+
 
 
     @Override
@@ -62,7 +62,8 @@ public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientReques
         try {
         return myApiService.getJoke().execute().getData();
         } catch (IOException e) {
-        return e.getMessage();
+            e.printStackTrace();
+        return "";
         }
         }
 
@@ -78,4 +79,7 @@ protected void onPostExecute(String result) {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
         }
+
+
+
         }
